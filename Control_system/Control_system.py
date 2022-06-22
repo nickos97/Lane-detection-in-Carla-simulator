@@ -1,5 +1,5 @@
 import numpy as np
-from target_point import get_target_point
+from Control_system.target_point import get_target_point
 
 
 param_Kp = 0.2

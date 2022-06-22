@@ -23,9 +23,9 @@ import weakref
 import torch
 from cv2 import COLOR_RGB2GRAY
 import queue
-from fastai_detect import fastai
-from LaneDetector import Unet_Detector
-from Control_system import PurePursuitPlusPID,PurePursuit,PIDController
+from Detection.fastai_detect import fastai
+from Detection.LaneDetector import Unet_Detector
+from Control_system.Control_system import PurePursuitPlusPID,PurePursuit,PIDController
 from datetime import datetime
 
 IM_WIDTH = 420

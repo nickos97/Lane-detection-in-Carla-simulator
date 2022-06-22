@@ -3,8 +3,8 @@ from torch import cuda, device
 from torch import cuda, sigmoid
 from tqdm import tqdm
 import torch.nn as nn
-from UNet import UNet2
-from utils import ( DataLoaders)
+from training.UNet import UNet2
+from utilities.utils import ( DataLoaders)
 from albumentations.pytorch import ToTensorV2
 import albumentations as album
 import numpy as np

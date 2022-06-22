@@ -1,4 +1,4 @@
-from IPM import IPM
+from utilities.IPM import IPM
 import numpy as np
 import cv2
 import torch

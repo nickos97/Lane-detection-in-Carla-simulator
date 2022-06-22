@@ -1,12 +1,12 @@
-from IPM import IPM
+from utilities.IPM import IPM
 import numpy as np
 import cv2
 import torch
-from UNet import UNet2
+from training.UNet import UNet2
 from albumentations.pytorch import ToTensorV2
 import albumentations as album
 from matplotlib import pyplot as plt
-from target_point import get_target_point
+from Control_system.target_point import get_target_point
 #from fastseg import MobileV3Small
 
 DEVICE="cuda"

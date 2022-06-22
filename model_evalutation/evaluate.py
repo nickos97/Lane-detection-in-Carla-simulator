@@ -1,5 +1,5 @@
-from UNet import UNet2
-from utils import ( DataLoaders)
+from training.UNet import UNet2
+from utilities.utils import ( DataLoaders)
 from albumentations.pytorch import ToTensorV2
 import albumentations as album
 import cv2

@@ -1,5 +1,5 @@
 import torch 
-import BlobData
+import utilities.BlobData as BlobData
 from torch.utils.data import DataLoader
 from albumentations.pytorch import ToTensorV2
 import albumentations as album
