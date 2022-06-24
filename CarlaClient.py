@@ -1,5 +1,4 @@
 import glob
-from multiprocessing.connection import Client
 import os
 import sys
 import math
