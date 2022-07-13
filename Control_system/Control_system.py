@@ -52,14 +52,3 @@ class PIDController:
         self.last_error = error
         return self.Kp * error + self.int_term + self.derivative_term
 
-
-class PurePursuitPlusPID:
-    def __init__(self, pure_pursuit=PurePursuit(), pid=PIDController(param_Kp, param_Ki, param_Kd, 0)):
-        self.pure_pursuit = pure_pursuit
-        self.pid = pid
-
-    def get_control(self,waypoints, speed, desired_speed, dt):
-        self.pid.set_point = desired_speed
-        throttle = self.pid.get_control(speed,dt)
-        steering = self.pure_pursuit.get_control(waypoints, speed)
-        return throttle, steering

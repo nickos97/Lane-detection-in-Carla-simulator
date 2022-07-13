@@ -75,13 +75,14 @@ class SychronousClient():
     # get lane boundaries using the lane detector
         image = self.process_img(image)
         
-        poly_left, poly_right, _, _,preds1 = ld.get_fit_and_probs(image)
+        #Get polynomials which describe right and left lane
+        poly_left, poly_right, _, _,preds = ld.get_fit_and_probs(image)
 
         x = np.arange(0,60,1.0)
         y = -0.5*(poly_left(x)+poly_right(x))
         x += 0.5
         traj = np.stack((x,y)).T
-        return traj,preds1
+        return traj,preds
         
     def predict(self,pred,image):
     

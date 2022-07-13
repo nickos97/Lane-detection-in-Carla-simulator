@@ -2,6 +2,7 @@ import numpy as np
 import random
 
 # Function from https://stackoverflow.com/a/59582674/2609987
+# Implementing circle-Line intersection from https://mathworld.wolfram.com/Circle-LineIntersection.html
 def circle_line_segment_intersection(circle_center, circle_radius, pt1, pt2, full_line=True, tangent_tol=1e-9):
 
     (p1x, p1y), (p2x, p2y), (cx, cy) = pt1, pt2, circle_center

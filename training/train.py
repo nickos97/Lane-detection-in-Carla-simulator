@@ -13,7 +13,6 @@ from torchsummary import summary
 from datetime import datetime
 import time
 import cv2
-from ignite.metrics import ConfusionMatrix,IoU,mIoU
 import matplotlib.pyplot as plt
 
 L_R = 1e-4
@@ -50,14 +49,6 @@ class Train_model():
         self.train_loss = []
         self.val_loss = []
         self.epochs = []
-        #print("Model's state_dict:")
-        ##for param_tensor in net.state_dict():
-            #print(param_tensor, "\t", net.state_dict()[param_tensor].size())
-
-        # Print optimizer's state_dict
-       # print("Optimizer's state_dict:")
-        #for var_name in self.optimizer.state_dict():
-           # print(var_name, "\t", self.optimizer.state_dict()[var_name])
         
         
     def fit(self):
@@ -115,8 +106,6 @@ class Train_model():
             self.epochs.append(epoch)  
             if counter>5:
                 break
-                    
-                #tqdm(train_loader).set_postfix(loss=loss.item())
             
         print(f"Training time: {datetime.now()-self.start_time}")
                  
@@ -130,7 +119,6 @@ class Train_model():
             net.eval()
             for batch_idx,data in enumerate(test_loader):
                 X,y = data
-                #print(len(data[0]))
                 if torch.cuda.is_available():
                     X = X.to(device=DEVICE)
                     y=y.unsqueeze(1).to(device=DEVICE)
@@ -138,8 +126,6 @@ class Train_model():
                 soft = nn.Softmax(dim=1)
                 preds = soft(out)
                 preds = torch.argmax(preds,dim=1,keepdim=True).float()
-                print(preds.size())
-                print(y.size())
                 save_image(preds,f"saved_images/pred_{batch_idx}.png")   
                 num_correct += (preds == y).sum()
                 num_pixels += len(X)*IMAGE_HEIGHT*IMAGE_WIDTH

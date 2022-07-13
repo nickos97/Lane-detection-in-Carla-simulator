@@ -11,10 +11,13 @@ from torch.utils.data import Dataset
 from PIL import Image
 from albumentations.pytorch import ToTensorV2
 import albumentations as album
+from dotenv import dotenv_values
 
-#for testing
-IMAGES_DIR = 'val'
-LABELS_DIR = 'val_label'
+DATA_DIR = dotenv_values('.env')
+
+#testing
+IMAGES_DIR = DATA_DIR['TRAIN_LABEL']
+LABELS_DIR = DATA_DIR['VAL_LABEL']
 IMAGE_HEIGHT = 180
 IMAGE_WIDTH = 330
 
@@ -24,7 +27,6 @@ class LanesDataset(Dataset):
         self.maskPath=maskPath
         self.transforms=transforms
         self.images = os.listdir(imagePath)
-        #self.masks = os.listdir(maskPath)
         
     def __len__(self):
         return len(self.images)
@@ -32,18 +34,12 @@ class LanesDataset(Dataset):
     def __getitem__(self,idx):
         img_path = os.path.join(self.imagePath,self.images[idx])
         mask_path = os.path.join(self.maskPath,self.images[idx].replace('.png','_label.png'))
-        #print(img_path,mask_path)
         image = cv2.imread(img_path)
-        
-        
         image = np.array(cv2.cvtColor(image,COLOR_BGR2RGB),dtype=np.float32)
             
-        #image = cv2.resize(image,(128,64),interpolation=cv2.INTER_AREA)
         mask = cv2.imread(mask_path)
         mask = np.array(cv2.cvtColor(mask,COLOR_BGR2GRAY))
         
-        
-        #mask = cv2.resize(mask,(128,64),interpolation=cv2.INTER_AREA)
         if self.transforms != None:
             augmentations = self.transforms(mask=mask, image=image)
             mask = augmentations["mask"]
@@ -51,7 +47,7 @@ class LanesDataset(Dataset):
             image = augmentations["image"]
             
             
-        #mask[mask==2.0] = 1.0
+        #mask[mask==2.0] = 1.0 
         return (image,mask)
 
 def test():

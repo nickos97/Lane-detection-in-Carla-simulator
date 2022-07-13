@@ -5,12 +5,14 @@ from albumentations.pytorch import ToTensorV2
 import albumentations as album
 from torchvision.transforms import functional as F
 import os
-#from dotenv import load_dotenv
+from dotenv import dotenv_values
 
-TRAIN_IMG_DIR = 'train'
-TRAIN_LABEL_DIR = 'train_label'
-VAL_IMG_DIR = 'val'
-VAL_LABEL_DIR = 'val_label'
+DATA_DIR = dotenv_values(".env")
+
+TRAIN_IMG_DIR = DATA_DIR['TRAIN']
+TRAIN_LABEL_DIR = DATA_DIR['TRAIN_LABEL']
+VAL_IMG_DIR = DATA_DIR['VAL']
+VAL_LABEL_DIR = DATA_DIR['VAL_LABEL']
 IMAGE_HEIGHT = 16
 IMAGE_WIDTH = 32
 def DataLoaders(batch_size,

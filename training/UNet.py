@@ -92,9 +92,6 @@ class UNet2(nn.Module):
         upconv_output = conv_output
         for i in range(len(self.conv_ups)):
             trans_out = self.conv_trans[i](upconv_output)
-            #print(f"transposed ouput: {trans_out.size()}")
-            #print(f"tensor to concat: {connections[::-1][i].size()}")
-            #print(f"resized tensor to concat: {fit_tensor(connections[::-1][i],trans_out).size()}")
             tensor_to_concat = TF.resize(trans_out,size=connections[::-1][i].shape[2:])
             #upconv_output = self.conv_ups[i](torch.cat([trans_out,tensor_to_concat],1))
             upconv_output = self.conv_ups[i](torch.cat([tensor_to_concat,connections[::-1][i]],1))
@@ -112,11 +109,7 @@ def test():
 
     print(pred)             
        
-            
     
-    #print(len(pred[0,:][0]))
-    #summary(model,(3,210,420))
-    #print(pred.shape)
     
 if __name__=="__main__":
     test()

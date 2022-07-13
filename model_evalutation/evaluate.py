@@ -5,19 +5,16 @@ import albumentations as album
 import cv2
 import numpy as np
 import torch
-from torchvision.utils import save_image
-from PIL import Image
-from torch.autograd import Variable
-from torchvision import transforms
 import torch.nn as nn
 import matplotlib.pyplot as plt
-from ignite.metrics import ConfusionMatrix,IoU,mIoU
+from dotenv import dotenv_values
 
+DATA_DIR = dotenv_values(".env")
 
 IMAGE_HEIGHT = 210
 IMAGE_WIDTH = 420
-IMG_PATH = 'Town04_Clear_Noon_09_09_2020_14_57_22_frame_84_validation_set.png'
-MODEL_PATH = 'models\model_20220611_205600_32_512_21'
+IMG_PATH = DATA_DIR['IMAGE']
+MODEL_PATH = 'models\model_20220313_182658_32_512_19'
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 BATCH_SIZE=32
 num_classes=3
@@ -136,7 +133,6 @@ class evaluate():
             ax.set_xlabel('classes')
             ax.set_title('pixels per class (%)')
             ax.set_xticks(x,labels)
-            #ax.ticklabel_format(useOffset=False)
             
             ax.bar_label(rec)
             

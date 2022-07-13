@@ -7,10 +7,12 @@ from albumentations.pytorch import ToTensorV2
 import albumentations as album
 from matplotlib import pyplot as plt
 from Control_system.target_point import get_target_point
-#from fastseg import MobileV3Small
+from dotenv import dotenv_values
+
+DATA_DIR = dotenv_values(".env")
 
 DEVICE="cuda"
-IMG_PATH = 'Town04_Clear_Noon_09_09_2020_14_57_22_frame_863.png'
+IMG_PATH = DATA_DIR['IMAGE']
 IMAGE_HEIGHT = 210
 IMAGE_WIDTH = 420
 
@@ -23,7 +25,7 @@ def get_trajectory_from_lane_detector(ld, image):
     poly_left, poly_right, _, _,preds1 = ld.get_fit_and_probs(image)
     
     x = np.arange(-2,60,1.0)
-    y = -0.5*(poly_left(x)+poly_right(x))
+    y = -0.5*(poly_left(x)+poly_right(x)) 
     x += 0.5
     traj = np.stack((x,y)).T
     yl = poly_left(x)
@@ -73,13 +75,11 @@ class Unet_Detector():
         return preds2,preds1
 
     def detect(self, img_array):
-        model_output,preds1 = self._predict(img_array)
+        model_output,preds = self._predict(img_array)
         background, left, right = model_output[0,0,:,:], model_output[0,1,:,:], model_output[0,2,:,:] 
-        #cv2.imshow("",right/2)
-        #cv2.waitKey()
-        return background,preds1, left, right
+        return background,preds, left, right
 
-    def fit_poly(self, probs):
+    def fit_polynomials(self, probs):
     
         probs_flat = np.ravel(probs)
         mask = probs_flat > 0.5
@@ -91,10 +91,10 @@ class Unet_Detector():
         return np.poly1d(coeffs)
 
     def get_fit_and_probs(self, img):
-        _,preds1, left, right = self.detect(img)
-        left_poly = self.fit_poly(left)
-        right_poly = self.fit_poly(right)
-        return left_poly, right_poly, left, right,preds1
+        _,preds, left, right = self.detect(img)
+        left_poly = self.fit_polynomials(left)
+        right_poly = self.fit_polynomials(right)
+        return left_poly, right_poly, left, right,preds
     
 def main():
     ld = Unet_Detector()
