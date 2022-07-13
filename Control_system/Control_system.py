@@ -1,10 +1,11 @@
 import numpy as np
 from Control_system.target_point import get_target_point
 
-
-param_Kp = 0.2
-param_Ki = 0
-param_Kd = 0
+#PID parameters
+param_Kp = 0.5
+param_Ki = 0.3
+param_Kd = 0.1
+#Pure pursuit parameter
 param_K_dd = 0.7
 
 
