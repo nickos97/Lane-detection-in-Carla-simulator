@@ -13,6 +13,9 @@ the steering wheel angle and the necessary throttle are calculated from the pure
 the PID controller respectively. Finally, the appropriate control is applied by the Python API
 on the vehicle based on the previous calculations.
 
+![route20220503](https://user-images.githubusercontent.com/33639372/178665004-b1f333af-c96c-4905-b53f-e1918e1e9697.gif)
+
+
 # Lisence & copyright
 
 © Nikos Tzanettis, University of Patras 
